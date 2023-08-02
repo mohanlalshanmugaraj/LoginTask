@@ -63,19 +63,6 @@ class SignInDemoState extends State<SignInDemo> {
   Widget getAppleSignIn() {
     return Platform.isIOS?  SignInWithAppleButton(
       onPressed: () async {
-
-        // final session = await http.Client().post(
-        //   signInWithAppleEndpoint,
-        // );
-
-        // If we got this far, a session based on the Apple ID credential has been created in your system,
-        // and you can now set this as the app's session
-        // ignore: avoid_print
-        // print(session);
-
-
-
-
         final credential = await SignInWithApple.getAppleIDCredential(
           scopes: [
             AppleIDAuthorizationScopes.email,
@@ -107,19 +94,29 @@ class SignInDemoState extends State<SignInDemo> {
         title: Text('Google Sign-In Demo'),
       ),
       body: Center(
-        child: Column(
+          child: Column(
             children: [
-            Spacer(),
-        Text(email),
-        Text(name),
-        Text(token),
-        SignInButton(
-          Buttons.Google,
-          onPressed: _handleSignIn,
-        ), getAppleSignIn(),
-      Spacer(),
-      ],
-    )),
+              Spacer(),
+              Text(email),
+              Text(name),
+              Text(token),
+              SignInButton(
+                Buttons.Google,
+                onPressed: _handleSignIn,
+              ), getAppleSignIn(),
+
+              TextButton(onPressed: (){
+                setState(() {
+                  email = "";
+                  name = "";
+                  token = "";
+                });
+
+              }, child: Text("Logout")),
+
+              Spacer(),
+            ],
+          )),
     );
   }
 }
